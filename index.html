@@ -20,6 +20,19 @@ body{
     color:white;
 }
 
+/* BACKGROUND LAYER */
+#hearts {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    z-index:0;
+    pointer-events:none;
+}
+
+/* MAIN CONTENT ABOVE */
 .screen{
     min-height:100vh;
     display:flex;
@@ -28,6 +41,8 @@ body{
     align-items:center;
     text-align:center;
     padding:30px;
+    position:relative;
+    z-index:2;
 }
 
 h1{
@@ -95,16 +110,24 @@ button:hover{
     border-radius:20px;
 }
 
+/* FLOATING HEARTS */
 .heart{
     position:fixed;
-    font-size:25px;
-    animation:float 8s linear infinite;
-    opacity:.7;
+    font-size:20px;
+    animation:floatUp linear infinite;
+    opacity:0.6;
+    z-index:0;
 }
 
-@keyframes float{
-    from{ transform:translateY(100vh); }
-    to{ transform:translateY(-120px); }
+@keyframes floatUp{
+    from{
+        transform:translateY(110vh) scale(0.8);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-20vh) scale(1.4);
+        opacity:0;
+    }
 }
 
 .final{
@@ -116,60 +139,30 @@ button:hover{
 
 <body>
 
-<!-- inimioare decorative -->
 <div id="hearts"></div>
 
-<!-- INTRO -->
 <section id="intro" class="screen">
     <h1>🎂 La mulți ani, Andreea! ❤️</h1>
-
-    <p>
-        Astăzi este ziua ta și am pregătit un mic joc doar pentru tine.
-        Sperăm să-ți aducă un zâmbet și să-ți facă ziua mai frumoasă ✨
-    </p>
-
+    <p>Astăzi este ziua ta și am pregătit un mic joc doar pentru tine ✨</p>
     <button onclick="startStory()">Începe surpriza 💖</button>
 </section>
 
-<!-- POVESTE -->
 <section id="story" class="screen hidden">
     <h1>💌 Pentru tine, Andreea</h1>
-
-    <p>
-        Dragă Andreea,
-
-        astăzi este despre tine — despre zâmbetul tău,
-        energia ta bună și toate momentele frumoase pe care le aduci în jur.
-
-        Îți dorim un an plin de bucurii, aventuri,
-        oameni buni și amintiri de neuitat.
-
-        Nu uita niciodată cât de specială ești ❤️
-    </p>
-
+    <p>Îți dorim un an plin de bucurii, zâmbete și oameni frumoși ❤️</p>
     <button onclick="startQuiz()">Continuă ➜</button>
 </section>
 
-<!-- QUIZ -->
 <section id="quiz" class="screen hidden">
-
     <div class="quiz-box">
         <h1>🎮 Joc mic pentru tine</h1>
-
         <p id="question"></p>
-
         <div id="answers"></div>
     </div>
-
 </section>
 
-<!-- GALERIE -->
 <section id="galleryScreen" class="screen hidden">
-
     <h1>📸 Amintiri frumoase</h1>
-
-    <p>POZEEEEEE 💕</p>
-
     <div class="gallery">
         <img src="poza01.jpeg">
         <img src="poza02.jpeg">
@@ -177,56 +170,22 @@ button:hover{
         <img src="poza04.jpeg">
         <img src="poza05.jpeg">
     </div>
-
     <button onclick="showFinal()">Surpriza finală 🎁</button>
 </section>
 
-<!-- FINAL -->
 <section id="final" class="screen hidden">
-
-    <h1>🎉 La mulți ani, Andreea! 🎉</h1>
-
+    <h1>🎉 La mulți ani! 🎉</h1>
     <div class="final">
-
-        Îți dorim să ai parte de o viață plină de fericire,
-        sănătate, iubire și momente care să-ți rămână în suflet.
-
-        <br><br>
-
-        Să fii mereu înconjurată de oameni care te apreciază
-        și să nu încetezi niciodată să zâmbești.
-
-        <br><br>
-
-        Îți mulțumim că exiști și că faci lumea mai frumoasă ❤️
-
-        <br><br>
-
-        Cu mult drag,
-        <br>
-        ❤️ Ecaterina & Bogdan ❤️
+        Îți dorim fericire, sănătate și iubire ❤️
     </div>
-
 </section>
 
 <script>
 
 const quiz = [
-{
-question:"Cine este sărbătorita zilei? ✨",
-answers:["Andreea","O legendă","O persoană specială","Toate variantele"],
-correct:3
-},
-{
-question:"Ce merită Andreea de ziua ei? 🎁",
-answers:["Fericire","Zâmbete","Iubire","Tot ce e mai bun"],
-correct:3
-},
-{
-question:"Cât de specială este Andreea? ❤️",
-answers:["Mult","Foarte mult","Enorm","Nu se poate măsura"],
-correct:3
-}
+{ question:"Cine este sărbătorita?", answers:["Andreea","O legendă","O persoană specială","Toate"], correct:3 },
+{ question:"Ce merită?", answers:["Fericire","Iubire","Zâmbete","Tot"], correct:3 },
+{ question:"Cât de specială este?", answers:["Mult","Foarte mult","Enorm","Inimaginabil"], correct:3 }
 ];
 
 let current = 0;
@@ -243,22 +202,18 @@ function startQuiz(){
 }
 
 function loadQuestion(){
-
     const q = quiz[current];
-
     document.getElementById("question").innerText = q.question;
 
     const answers = document.getElementById("answers");
     answers.innerHTML = "";
 
     q.answers.forEach((ans,index)=>{
-
         const div = document.createElement("div");
         div.className = "option";
         div.innerText = ans;
 
         div.onclick = () => {
-
             if(index === q.correct){
                 current++;
                 if(current < quiz.length){
@@ -276,26 +231,27 @@ function loadQuestion(){
     });
 }
 
+/* CONFETTI (lightweight) */
 function showFinal(){
     document.getElementById("galleryScreen").classList.add("hidden");
     document.getElementById("final").classList.remove("hidden");
-    confetti();
-}
 
-function confetti(){
-    for(let i=0;i<120;i++){
+    for(let i=0;i<80;i++){
         let el = document.createElement("div");
         el.innerHTML = ["🎉","❤️","✨","🎂"][Math.floor(Math.random()*4)];
         el.style.position = "fixed";
         el.style.left = Math.random()*100 + "vw";
-        el.style.top = "-50px";
+        el.style.top = "-40px";
         el.style.fontSize = (18+Math.random()*25)+"px";
+        el.style.zIndex = 9999;
         document.body.appendChild(el);
 
         let pos = 0;
+
         let fall = setInterval(()=>{
-            pos += 5;
+            pos += 4 + Math.random()*3;
             el.style.top = pos + "px";
+
             if(pos > window.innerHeight){
                 clearInterval(fall);
                 el.remove();
@@ -304,15 +260,24 @@ function confetti(){
     }
 }
 
-// inimioare decorative
-for(let i=0;i<25;i++){
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.animationDuration = (5+Math.random()*8)+"s";
-    document.body.appendChild(heart);
+/* HEART BACKGROUND */
+const heartsContainer = document.getElementById("hearts");
+
+function createHeart(){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+
+    h.style.left = Math.random()*100 + "vw";
+    h.style.fontSize = (12 + Math.random()*20) + "px";
+    h.style.animationDuration = (5 + Math.random()*6) + "s";
+
+    heartsContainer.appendChild(h);
+
+    setTimeout(()=>h.remove(), 11000);
 }
+
+setInterval(createHeart, 250);
 
 </script>
 
