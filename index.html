@@ -1,77 +1,319 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CUSTOMIZE: Browser tab title -->
-    <title>Will You Be My Valentine? 💝</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La mulți ani, Andreea! ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    min-height:100vh;
+    overflow-x:hidden;
+    color:white;
+}
+
+.screen{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:30px;
+}
+
+h1{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+p{
+    max-width:700px;
+    line-height:1.8;
+    font-size:1.2rem;
+}
+
+button{
+    margin-top:25px;
+    padding:15px 30px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff4f81;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.hidden{
+    display:none;
+}
+
+.quiz-box{
+    max-width:700px;
+}
+
+.option{
+    background:white;
+    color:#ff4f81;
+    margin:10px;
+    padding:15px;
+    border-radius:15px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.option:hover{
+    transform:scale(1.03);
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    width:100%;
+    max-width:900px;
+    margin-top:25px;
+}
+
+.gallery img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+.heart{
+    position:fixed;
+    font-size:25px;
+    animation:float 8s linear infinite;
+    opacity:.7;
+}
+
+@keyframes float{
+    from{ transform:translateY(100vh); }
+    to{ transform:translateY(-120px); }
+}
+
+.final{
+    font-size:1.5rem;
+    line-height:2;
+}
+</style>
 </head>
+
 <body>
-    <!-- Floating Background Elements -->
-    <div class="floating-elements">
-        <!-- Hearts and bears will be added here by JavaScript -->
+
+<!-- inimioare decorative -->
+<div id="hearts"></div>
+
+<!-- INTRO -->
+<section id="intro" class="screen">
+    <h1>🎂 La mulți ani, Andreea! ❤️</h1>
+
+    <p>
+        Astăzi este ziua ta și am pregătit un mic joc doar pentru tine.
+        Sperăm să-ți aducă un zâmbet și să-ți facă ziua mai frumoasă ✨
+    </p>
+
+    <button onclick="startStory()">Începe surpriza 💖</button>
+</section>
+
+<!-- POVESTE -->
+<section id="story" class="screen hidden">
+    <h1>💌 Pentru tine, Andreea</h1>
+
+    <p>
+        Dragă Andreea,
+
+        astăzi este despre tine — despre zâmbetul tău,
+        energia ta bună și toate momentele frumoase pe care le aduci în jur.
+
+        Îți dorim un an plin de bucurii, aventuri,
+        oameni buni și amintiri de neuitat.
+
+        Nu uita niciodată cât de specială ești ❤️
+    </p>
+
+    <button onclick="startQuiz()">Continuă ➜</button>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="screen hidden">
+
+    <div class="quiz-box">
+        <h1>🎮 Joc mic pentru tine</h1>
+
+        <p id="question"></p>
+
+        <div id="answers"></div>
     </div>
 
-    <!-- Main Content Container -->
-    <div class="container">
-        <h1 id="valentineTitle"></h1>
-        
-        <!-- Music Player -->
-        <div id="musicControls" class="music-controls">
-            <button id="musicToggle" class="music-btn">🎵 Play Music</button>
-            <audio id="bgMusic" loop>
-                <source id="musicSource" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        </div>
+</section>
 
-        <!-- First Question -->
-        <div class="question-section" id="question1">
-            <h2 id="question1Text"></h2>
-            <button class="cute-btn" onclick="moveButton(this)" id="yesBtn1"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn1"></button>
-            <!-- CUSTOMIZE: Secret answer text -->
-            <div class="secret-answer">
-                <button class="cute-btn special" onclick="showNextQuestion(2)" id="secretAnswerBtn"></button>
-            </div>
-        </div>
+<!-- GALERIE -->
+<section id="galleryScreen" class="screen hidden">
 
-        <!-- Second Question (Love Meter) -->
-        <div class="question-section hidden" id="question2">
-            <h2 id="question2Text"></h2>
-            <!-- Love meter settings: min="0" max="10000" -->
-            <div class="love-meter">
-                <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
-                <p>
-                    <span class="love-value-container"><span id="startText"></span> (<span id="loveValue">100</span>%)</span>
-                    <span id="extraLove" class="hidden"></span>
-                </p>
-            </div>
-            <button class="cute-btn" onclick="showNextQuestion(3)" id="nextBtn"></button>
-        </div>
+    <h1>📸 Amintiri frumoase</h1>
 
-        <!-- Final Question -->
-        <div class="question-section hidden" id="question3">
-            <h2 id="question3Text"></h2>
-            <button class="cute-btn final-yes" onclick="celebrate()" id="yesBtn3"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn3"></button>
-        </div>
+    <p>Poți înlocui aceste imagini cu poze reale cu voi 💕</p>
 
-        <!-- CUSTOMIZE: Celebration message -->
-        <div class="celebration hidden" id="celebration">
-            <h2 id="celebrationTitle"></h2>
-            <p class="celebration-text" id="celebrationMessage"></p>
-            <p class="celebration-text" id="celebrationEmojis"></p>
-        </div>
+    <div class="gallery">
+        <img src="https://picsum.photos/400/500?1">
+        <img src="https://picsum.photos/400/500?2">
+        <img src="https://picsum.photos/400/500?3">
+        <img src="https://picsum.photos/400/500?4">
     </div>
 
-    <!-- Scripts -->
-    <script src="config.js"></script>
-    <script src="theme.js"></script>
-    <script src="script.js"></script>
+    <button onclick="showFinal()">Surpriza finală 🎁</button>
+</section>
+
+<!-- FINAL -->
+<section id="final" class="screen hidden">
+
+    <h1>🎉 La mulți ani, Andreea! 🎉</h1>
+
+    <div class="final">
+
+        Îți dorim să ai parte de o viață plină de fericire,
+        sănătate, iubire și momente care să-ți rămână în suflet.
+
+        <br><br>
+
+        Să fii mereu înconjurată de oameni care te apreciază
+        și să nu încetezi niciodată să zâmbești.
+
+        <br><br>
+
+        Îți mulțumim că exiști și că faci lumea mai frumoasă ❤️
+
+        <br><br>
+
+        Cu mult drag,
+        <br>
+        ❤️ Ecaterina & Bogdan ❤️
+    </div>
+
+</section>
+
+<script>
+
+const quiz = [
+{
+question:"Cine este sărbătorita zilei? ✨",
+answers:["Andreea","O legendă","O persoană specială","Toate variantele"],
+correct:3
+},
+{
+question:"Ce merită Andreea de ziua ei? 🎁",
+answers:["Fericire","Zâmbete","Iubire","Tot ce e mai bun"],
+correct:3
+},
+{
+question:"Cât de specială este Andreea? ❤️",
+answers:["Mult","Foarte mult","Enorm","Nu se poate măsura"],
+correct:3
+}
+];
+
+let current = 0;
+
+function startStory(){
+    document.getElementById("intro").classList.add("hidden");
+    document.getElementById("story").classList.remove("hidden");
+}
+
+function startQuiz(){
+    document.getElementById("story").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+    loadQuestion();
+}
+
+function loadQuestion(){
+
+    const q = quiz[current];
+
+    document.getElementById("question").innerText = q.question;
+
+    const answers = document.getElementById("answers");
+    answers.innerHTML = "";
+
+    q.answers.forEach((ans,index)=>{
+
+        const div = document.createElement("div");
+        div.className = "option";
+        div.innerText = ans;
+
+        div.onclick = () => {
+
+            if(index === q.correct){
+                current++;
+                if(current < quiz.length){
+                    loadQuestion();
+                } else {
+                    document.getElementById("quiz").classList.add("hidden");
+                    document.getElementById("galleryScreen").classList.remove("hidden");
+                }
+            } else {
+                alert("Mai încearcă 😊");
+            }
+        };
+
+        answers.appendChild(div);
+    });
+}
+
+function showFinal(){
+    document.getElementById("galleryScreen").classList.add("hidden");
+    document.getElementById("final").classList.remove("hidden");
+    confetti();
+}
+
+function confetti(){
+    for(let i=0;i<120;i++){
+        let el = document.createElement("div");
+        el.innerHTML = ["🎉","❤️","✨","🎂"][Math.floor(Math.random()*4)];
+        el.style.position = "fixed";
+        el.style.left = Math.random()*100 + "vw";
+        el.style.top = "-50px";
+        el.style.fontSize = (18+Math.random()*25)+"px";
+        document.body.appendChild(el);
+
+        let pos = 0;
+        let fall = setInterval(()=>{
+            pos += 5;
+            el.style.top = pos + "px";
+            if(pos > window.innerHeight){
+                clearInterval(fall);
+                el.remove();
+            }
+        },20);
+    }
+}
+
+// inimioare decorative
+for(let i=0;i<25;i++){
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (5+Math.random()*8)+"s";
+    document.body.appendChild(heart);
+}
+
+</script>
+
 </body>
-</html> 
+</html>
