@@ -5,11 +5,11 @@
 const CONFIG = {
     // Your Valentine's name that will appear in the title
     // Example: "Jade", "Sarah", "Mike"
-    valentineName: "🥰🥹😍Baby Cati❤️🔥😈",
+    valentineName: "🎂 La mulți ani, Andreea! ❤️",
 
     // The title that appears in the browser tab
     // You can use emojis! 💝 💖 💗 💓 💞 💕
-    pageTitle: "Vrei să fii Gabriela (Valentina) mea? 💝",
+    pageTitle: "Este ziua taaa!!!! 💝",
 
     // Floating emojis that appear in the background
     // Find more emojis at: https://emojipedia.org
@@ -22,10 +22,10 @@ const CONFIG = {
     // Customize each question and its possible responses
     questions: {
         first: {
-            text: "Mă place bebelușa mea?",                                    // First interaction
+            text: "Astăzi este ziua ta și am pregătit un mic joc doar pentru tine. Sperăm să-ți aducă un zâmbet și să-ți amintească cât de apreciată ești. Vrei să începem?",                                    // First interaction
             yesBtn: "Da",                                             // Text for "Yes" button
             noBtn: "Nu",                                               // Text for "No" button
-            secretAnswer: "Nu te plac, te iubesc! ❤️😍"           // Secret hover message
+            secretAnswer: "Nu mai începem odată??! ❤️😍"           // Secret hover message
         },
         second: {
             text: "Cât de mult mă iubești? 😳",                          // For the love meter
